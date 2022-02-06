@@ -1,7 +1,9 @@
 const Wallets = require("../models/wallet.model.js");
+const WalletUsers = require("../models/walletUser.model.js");
 const express = require("express");
 const { v4: uuidv4 } = require('uuid');
 const { json } = require("express/lib/response");
+
 
 
 // Create and Save a new Tutorial
@@ -14,17 +16,29 @@ exports.create = (req, res) => {
         }
       const wallets = [];
       const wallletRespList = [];
-      
+
+      const walletUser = new WalletUsers(
+          {
+            id:uuidv4(),
+            walletCode:"SA-"+req.body.walletUser,
+            walletUser:req.body.walletUser,
+            phone:req.body.walletUser,
+            name:req.body.name,
+            status:"",
+            system:req.body.system
+          }
+      )
+
       for(let i = 0;i<3;i++ ){
         const walletResp = new Wallets({
             id : uuidv4(),
-            currency : req.body.currency,
+            currency : "IDR",
             balance : 0,
-            status : req.body.status,
+            status : "",
             walletType :(i==0)?"POINT":(i==1)?"SALDO":"SAKU",
-            notes : req.body.notes,
-            walletCode :"SA-"+req.body.walletCode,
-            pin : req.body.pin,
+            notes : "",
+            walletCode :"SA-"+req.body.walletUser,
+            pin : "",
             expiredTime : "",
             lastTransactionTime : "",
           });
@@ -33,13 +47,13 @@ exports.create = (req, res) => {
 
         const wallet =[];
         wallet[0] = uuidv4();
-        wallet[1] = req.body.currency;
+        wallet[1] = "IDR";
         wallet[2] = 0;
-        wallet[3] = req.body.status;
+        wallet[3] = "";
         wallet[4] = (i==0)?"POINT":(i==1)?"SALDO":"SAKU";
-        wallet[5] = req.body.notes;
-        wallet[6] = req.body.walletCode;
-        wallet[7] = req.body.pin;
+        wallet[5] = "";
+        wallet[6] = "SA-"+req.body.walletUser;
+        wallet[7] = "";
         wallet[8] = "";
         wallet[9] = "";
 
@@ -48,10 +62,15 @@ exports.create = (req, res) => {
 
       console.log(wallets);
 
-      
+      WalletUsers.create(walletUser, (err, data) => {
+        if (err){
+            console.log(err)
+        }
+        console.log("Successfully Insert to wallet User");
+      });  
   
       // Save Tutorial in the database
-    Wallets.create(wallets, (err, data) => {
+          Wallets.create(wallets, (err, data) => {
             if (err){
                 res.status(500).send({
                     message:
@@ -63,7 +82,10 @@ exports.create = (req, res) => {
                  message:"OK",
                  data:wallletRespList
              });
+             console.log("Successfully Insert to wallets"); 
           });
+
+             
 };
     
     // Retrieve all Tutorials from the database (with condition).
