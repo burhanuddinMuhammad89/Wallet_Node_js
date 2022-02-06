@@ -17,73 +17,91 @@ exports.create = (req, res) => {
       const wallets = [];
       const wallletRespList = [];
 
-      const walletUser = new WalletUsers(
-          {
-            id:uuidv4(),
-            walletCode:"SA-"+req.body.walletUser,
-            walletUser:req.body.walletUser,
-            phone:req.body.walletUser,
-            name:req.body.name,
-            status:"",
-            system:req.body.system
-          }
-      )
-
-      for(let i = 0;i<3;i++ ){
-        const walletResp = new Wallets({
-            id : uuidv4(),
-            currency : "IDR",
-            balance : 0,
-            status : "",
-            walletType :(i==0)?"POINT":(i==1)?"SALDO":"SAKU",
-            notes : "",
-            walletCode :"SA-"+req.body.walletUser,
-            pin : "",
-            expiredTime : "",
-            lastTransactionTime : "",
-          });
-        
-          wallletRespList.push(walletResp);
-
-        const wallet =[];
-        wallet[0] = uuidv4();
-        wallet[1] = "IDR";
-        wallet[2] = 0;
-        wallet[3] = "";
-        wallet[4] = (i==0)?"POINT":(i==1)?"SALDO":"SAKU";
-        wallet[5] = "";
-        wallet[6] = "SA-"+req.body.walletUser;
-        wallet[7] = "";
-        wallet[8] = "";
-        wallet[9] = "";
-
-        wallets.push(wallet);  
-      }
+      
 
       console.log(wallets);
 
-      WalletUsers.create(walletUser, (err, data) => {
-        if (err){
-            console.log(err)
-        }
-        console.log("Successfully Insert to wallet User");
-      });  
-  
-      // Save Tutorial in the database
-          Wallets.create(wallets, (err, data) => {
-            if (err){
-                res.status(500).send({
-                    message:
-                      err.message || "Some error occurred while creating the Tutorial."
-                  });
+      WalletUsers.findByWalletUser(req.body.walletUser,(err,data)=>{
+        // console.log("data is "+data[0]);
+       
+        if(data==null||!data.length){
+            const walletUser = new WalletUsers(
+                {
+                  id:uuidv4(),
+                  walletCode:"SA-"+req.body.walletUser,
+                  walletUser:req.body.walletUser,
+                  phone:req.body.walletUser,
+                  name:req.body.name,
+                  status:"",
+                  system:req.body.system
+                }
+            )
+      
+            for(let i = 0;i<3;i++ ){
+              const walletResp = new Wallets({
+                  id : uuidv4(),
+                  currency : "IDR",
+                  balance : 0,
+                  status : "",
+                  walletType :(i==0)?"POINT":(i==1)?"SALDO":"SAKU",
+                  notes : "",
+                  walletCode :"SA-"+req.body.walletUser,
+                  pin : "",
+                  expiredTime : "",
+                  lastTransactionTime : "",
+                });
+              
+                wallletRespList.push(walletResp);
+      
+              const wallet =[];
+              wallet[0] = uuidv4();
+              wallet[1] = "IDR";
+              wallet[2] = 0;
+              wallet[3] = "";
+              wallet[4] = (i==0)?"POINT":(i==1)?"SALDO":"SAKU";
+              wallet[5] = "";
+              wallet[6] = "SA-"+req.body.walletUser;
+              wallet[7] = "";
+              wallet[8] = "";
+              wallet[9] = "";
+      
+              wallets.push(wallet);  
             }
+    
 
-            res.status(200).send({
-                 message:"OK",
-                 data:wallletRespList
-             });
-             console.log("Successfully Insert to wallets"); 
-          });
+
+            WalletUsers.create(walletUser, (err, data) => {
+                if (err){
+                    console.log(err)
+                }
+                console.log("Successfully Insert to wallet User");
+              });  
+          
+              // Save Tutorial in the database
+                  Wallets.create(wallets, (err, data) => {
+                    if (err){
+                        res.status(500).send({
+                            message:
+                              err.message || "Some error occurred while creating the Tutorial."
+                          });
+                    }
+        
+                    res.status(200).send({
+                         message:"OK",
+                         data:wallletRespList
+                     });
+                     console.log("Successfully Insert to wallets"); 
+                  });
+        }else{
+            res.status(500).send({
+                message:
+                 "User Already available.."
+              });
+        }
+
+      });
+
+      
 
              
 };

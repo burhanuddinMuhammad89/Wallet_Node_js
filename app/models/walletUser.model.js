@@ -25,8 +25,8 @@ WalletUser.create = (newWalletUser, result) => {
   });
 };
 
-WalletUser.findByWalletCode = (id, result) => {
-  sql.query(`SELECT * FROM tutorials WHERE id = ${id}`, (err, res) => {
+WalletUser.findByWalletUser = (id, result) => {
+  sql.query(`SELECT * FROM wallet_users WHERE wallet_user = ${id}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -35,7 +35,7 @@ WalletUser.findByWalletCode = (id, result) => {
 
     if (res.length) {
       console.log("found tutorial: ", res[0]);
-      result(null, res[0]);
+      result(null, res);
       return;
     }
 
