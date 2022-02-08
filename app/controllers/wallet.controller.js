@@ -13,6 +13,20 @@ exports.create = (req, res) => {
             res.status(400).send({
             message: "Content can not be empty!"
             });
+            return;
+        }
+        if (!req.body.walletUser) {
+            res.status(400).send({
+            message: "Wallet User can not be empty!"
+            });
+            return;
+        }
+
+        if (!req.body.name) {
+            res.status(400).send({
+            message: "Name can not be empty!"
+            });
+            return;
         }
       const wallets = [];
       const wallletRespList = [];
