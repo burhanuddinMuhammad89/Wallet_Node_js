@@ -11,20 +11,26 @@ exports.create = (req, res) => {
    // Validate request
        if (!req.body) {
             res.status(400).send({
-            message: "Content can not be empty!"
+                status:400,    
+                message: "Content can not be empty!",
+                content:null
             });
             return;
         }
         if (!req.body.walletUser) {
             res.status(400).send({
-            message: "Wallet User can not be empty!"
+                status:400,
+                message: "Wallet User can not be empty!",
+                content:null
             });
             return;
         }
 
         if (!req.body.name) {
             res.status(400).send({
-            message: "Name can not be empty!"
+                status:400,
+                message: "Name can not be empty!",
+                content:null
             });
             return;
         }
