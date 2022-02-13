@@ -28,8 +28,10 @@ Wallet.create = (newWallet, result) => {
   });
 };
 
-Wallet.findByWalletCode = (id, result) => {
-  sql.query(`SELECT * FROM tutorials WHERE id = ${id}`, (err, res) => {
+Wallet.findByWalletCode = (walletCode,walletType,result) => {
+  console.log("walletCode is :"+walletCode);
+  console.log("walletType :"+walletType);
+  sql.query("SELECT * FROM wallets WHERE wallet_code ='"+walletCode+"' and wallet_type = '"+walletType+"'", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -51,7 +53,7 @@ Wallet.getAll = (title, result) => {
   let query = "SELECT * FROM tutorials";
 
   if (title) {
-    query += ` WHERE title LIKE '%${title}%'`;
+    query +=  "WHERE title LIKE '%"+title+"'";
   }
 
   sql.query(query, (err, res) => {
@@ -68,10 +70,10 @@ Wallet.getAll = (title, result) => {
 
 
 
-Wallet.updateByWalletCode = (id, tutorial, result) => {
+Wallet.updateByWalletCodeAndType = (newWallet, result) => {
   sql.query(
-    "UPDATE tutorials SET title = ?, description = ?, published = ? WHERE id = ?",
-    [tutorial.title, tutorial.description, tutorial.published, id],
+    "UPDATE wallets SET balance = ? WHERE wallet_code = ? and wallet_type = ?",
+    [newWallet.balance, newWallet.walletCode, newWallet.walletType],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -85,8 +87,8 @@ Wallet.updateByWalletCode = (id, tutorial, result) => {
         return;
       }
 
-      console.log("updated tutorial: ", { id: id, ...tutorial });
-      result(null, { id: id, ...tutorial });
+      console.log("updated balance wallet: ", {result});
+      result(null, { result });
     }
   );
 };

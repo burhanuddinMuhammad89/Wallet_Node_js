@@ -26,6 +26,7 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `customer_cashout_request`
 --
+use Wallet;
 
 CREATE TABLE `customer_cashout_request` (
   `id` varchar(100) NOT NULL,

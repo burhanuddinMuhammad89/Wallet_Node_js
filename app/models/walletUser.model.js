@@ -48,7 +48,7 @@ WalletUser.getAll = (title, result) => {
   let query = "SELECT * FROM tutorials";
 
   if (title) {
-    query += ` WHERE title LIKE '%${title}%'`;
+    query += "WHERE title LIKE '%"+title+"'";
   }
 
   sql.query(query, (err, res) => {

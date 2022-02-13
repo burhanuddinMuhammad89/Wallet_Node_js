@@ -7,6 +7,8 @@ module.exports = app => {
   
     // Create a new Tutorial
     router.post("/", wallet.create);
+
+    router.post("/walletAdd", wallet.createTransaction);
   
     // // Retrieve all Tutorials
     // router.get("/", tutorials.findAll);
