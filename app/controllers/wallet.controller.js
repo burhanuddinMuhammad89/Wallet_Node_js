@@ -169,21 +169,22 @@ exports.createTransaction = (req, res) => {
                balanceBefore = data.balance;
                console.log("balance before :"+balanceBefore);         
                var balanceAfter = parseInt(req.body.amount)+parseInt(balanceBefore);
+               
                const walletTransaction = new WalletTransactions(
                  {
-                  id :uuidv4(),
-                  walletTransactionTime : new Date(),
-                  transactionId : req.body.transactionId,
-                  walletCode : req.body.walletCode,
-                  phone : req.body.walletCode.substring(3),
+                  id:uuidv4(),
+                  walletTransactionTime:new Date(),
+                  transactionId:req.body.transactionId,
+                  walletCode:req.body.walletCode,
+                  phone:req.body.walletCode.substring(3),
                   
-                  name : WalletUsers.findByWalletUser(req.body.walletCode.substring(3),(err,data)=>{
+                  name:WalletUsers.findByWalletUser(req.body.walletCode.substring(3),(err,data)=>{
                           return data.name;
                   }),
-                  currency : "IDR",
-                  balanceBefore : balanceBefore,
-                  amount : req.body.amount,
-                  balanceAfter : balanceAfter,
+                  currency:"IDR",
+                  balanceBefore:balanceBefore,
+                  amount:req.body.amount,
+                  balanceAfter:balanceAfter,
                   walletTransactionType : req.body.walletTransactionType,
                   notes : "",
                   walletTransactionState : "",

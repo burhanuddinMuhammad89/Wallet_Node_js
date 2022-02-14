@@ -2,33 +2,33 @@ const sql = require("./db.js");
 
 // constructor
 const WalletTransactions = function(walletTransactions) {
-  this.id = WalletTransactions.id;
-  this.walletTransactionTime = WalletTransactions.walletTransactionTime;
-  this.transactionId = WalletTransactions.transactionId;
-  this.walletCode = WalletTransactions.walletCode;
-  this.phone = WalletTransactions.phone;
-  this.name = WalletTransactions.name;
-  this.currency = WalletTransactions.currency;
-  this.balanceBefore = WalletTransactions.balanceBefore;
-  this.amount = WalletTransactions.amount;
-  this.balanceAfter = WalletTransactions.balanceAfter;
-  this.walletTransactionType = WalletTransactions.walletTransactionType;
-  this.no = WalletTransactions.no;
-  this.walletTransactionState = WalletTransactions.walletTransactionState;
-  this.walletTransactionOperation = WalletTransactions.walletTransactionOperation;
-  this.walletTransactionReleaseTime = WalletTransactions.walletTransactionReleaseTime;
-  this.walletFundSource = WalletTransactions.walletFundSource;
-  this.walletFundData = WalletTransactions.walletFundData;
-  this.isDisplay = WalletTransactions.isDisplay;
-  this.walletType = WalletTransactions.walletType;
-  this.walletTransactionCancelTime = WalletTransactions.walletTransactionCancelTime;
-  this.walletTransactionVoidTime = WalletTransactions.walletTransactionVoidTime;
-  this.walletUser = WalletTransactions.walletUser;
+  this.id = walletTransactions.id;
+  this.wallet_transaction_time = walletTransactions.walletTransactionTime;
+  this.transaction_Id = walletTransactions.transactionId;
+  this.wallet_Code = walletTransactions.walletCode;
+  this.phone = walletTransactions.phone;
+  this.name = walletTransactions.name;
+  this.currency = walletTransactions.currency;
+  this.balance_Before = walletTransactions.balanceBefore;
+  this.amount = walletTransactions.amount;
+  this.balance_After = walletTransactions.balanceAfter;
+  this.wallet_Transaction_Type = walletTransactions.walletTransactionType;
+  this.notes = walletTransactions.notes;
+  this.wallet_Transaction_State = walletTransactions.walletTransactionState;
+  this.wallet_Transaction_Operation = walletTransactions.walletTransactionOperation;
+  this.wallet_Transaction_Release_Time = walletTransactions.walletTransactionReleaseTime;
+  this.wallet_Fund_Source = walletTransactions.walletFundSource;
+  this.wallet_Fund_Data = walletTransactions.walletFundData;
+  this.is_Display = walletTransactions.isDisplay;
+  this.wallet_Type = walletTransactions.walletType;
+  this.wallet_Transaction_Cancel_Time = walletTransactions.walletTransactionCancelTime;
+  this.wallet_Transaction_Void_Time = walletTransactions.walletTransactionVoidTime;
+  this.wallet_User = walletTransactions.walletUser;
 };
 
-WalletTransactions.create = (walletTransactions, result) => {
+WalletTransactions.create = (newWalletTransactions, result) => {
   
-  sql.query("INSERT INTO wallet_transactions SET ?", walletTransactions, (err, res) => {
+  sql.query("INSERT INTO wallet_transactions SET ?", newWalletTransactions, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -36,7 +36,7 @@ WalletTransactions.create = (walletTransactions, result) => {
     }
 
     
-    result(null, walletTransactions);
+    result(null, newWalletTransactions);
   });
 };
 
